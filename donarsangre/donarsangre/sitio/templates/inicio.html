@@ -1,2 +1,18 @@
-<h1>donarsangre.com</h1>
-<p>work in progress>
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hola {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+  <p>donarsangre.com</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+<p>
+    <a href="{% url 'informacion' %}">Información importante!</a>
+</p>
+
+{% endblock %}
