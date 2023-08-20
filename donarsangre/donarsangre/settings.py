@@ -127,7 +127,6 @@ LOGOUT_REDIRECT_URL = "/"
 
 # code needed to deploy in Render.com:
 
-"""
 import os
 import dj_database_url
 if 'RENDER' in os.environ:
@@ -139,4 +138,3 @@ if 'RENDER' in os.environ:
                       'whitenoise.middleware.WhiteNoiseMiddleware')
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-"""
