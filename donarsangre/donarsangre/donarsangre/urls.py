@@ -20,6 +20,8 @@ from sitio import views
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
+from sitio.views import SignUpView
+
 
 """from sitio.views import SignUpView"""
 
@@ -30,5 +32,5 @@ urlpatterns = [
     path("login/", include("django.contrib.auth.urls")),
     path('', views.inicio, name='inicio'),
     path('informacion/login/', auth_views.LoginView.as_view()),
-
+    path("registro/", SignUpView.as_view(), name="registro")
 ]
