@@ -1,0 +1,20 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hola {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Cerrar sesión</a></p>
+  <a href="{% url 'admin:index' %}">Administrador</a>
+{% else %}
+  <p>donarsangre.com</p>
+  <p><a href="{% url 'login' %}">Iniciar sesión</a></p>
+  <p><a href="{% url 'registro' %}">Registrarse</a></p>
+{% endif %}
+<p>
+    <a href="{% url 'informacion' %}">Información importante!</a>
+</p>
+
+{% endblock %}
