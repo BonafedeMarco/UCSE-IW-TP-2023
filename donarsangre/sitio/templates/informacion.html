@@ -1,3 +1,26 @@
-<h1>donarsangre.com</h1>
-<p>Información importante!</p>
-<p> <a href="{% url 'inicio' %}">Home</a> </p>
+
+{% extends 'base.html' %}
+
+{% block title %}Dona Sangre Hoy{% endblock %}
+
+{% block content %}
+<html>
+    <head>
+        <title>DonaSangreHoy: información importante</title>
+    </head>
+    <body>
+        <br>
+        <h5 align="center">Requisitos para donar sangre:</h5>
+        <br>
+        <p align="center">
+            - Tener entre 18 y 65 años de edad. <br>
+            - Pesar más de 50 Kg. <br>
+            - Sentirse bien de salud. <br>
+            - No padecer enfermedades que sean transmitidas por sangre, (Hepatitis, Chagas, etc). <br>
+            - No haber tenido relaciones sexuales con parejas ocasionales. <br>
+            - No consumir drogas endovenosas. <br>
+            - No haberse realizado recientemente (un año) tatuajes, perforaciones o escarificaciones cutáneas. 
+        </p> 
+           </body>
+</html>
+{% endblock %}
