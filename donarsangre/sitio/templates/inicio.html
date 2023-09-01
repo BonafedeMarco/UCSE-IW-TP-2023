@@ -4,25 +4,12 @@
 {% block title %}DonaSangreHoy!{% endblock %}
 {% block content %}
 <br>
-<br>
-<br>
-  <figure class="text-center">
-    <blockquote class="blockquote">
-      <p><b>
-        Nuestro sitio está evolucionando...
-      </b></p>
-    </blockquote>
-    <figcaption class="blockquote-footer">
-      <font color="red">
-        <b>
-          Queremos que solicitantes y donantes de sangre se encuentren.
-        </b>
-      </font>
-    </figcaption>
-    <figcaption class="blockquote-footer">
-      Te invitamos a visitar la sección de información importante:
-    </figcaption>
-    </text>
-    <a href="{% url 'informacion' %}" class="btn btn-outline-dark btn-sm" button style="margin: 10px">Información importante</a>
-  </figure>
+<div align="center">
+  {% if user.is_authenticated %}
+  <a href="{% url 'new_post' %}" type="button" class="btn btn-danger" button style="margin: 10px" >Nueva solicitud</a>
+  {% endif %}
+  <h5>_______________________________________</h5>
+</div>
+    
+    {% include 'post_list.html' %}
 {% endblock %}

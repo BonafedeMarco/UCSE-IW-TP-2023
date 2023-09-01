@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
+"""
 class Usuario(models.Model):
     nombre = models.CharField(max_length=30)
     apellido = models.CharField(max_length=30)
@@ -40,3 +42,40 @@ class Donacion(models.Model):
 
     def __str__(self):
         return f"{self.fecha} - {self.litrosDonados} L - {self.donante.nombreCompleto}"
+
+"""
+class Profile (models.Model):
+    user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    ubication = models.CharField(max_length=255, null=True, blank=True)
+    blood_type = models.CharField(max_length=255, null=True, blank=True)
+
+
+class Ubication (models.Model):
+    nombre = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nombre
+    
+
+class Post (models.Model):
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, blank=True, null=True)
+    title = models.CharField(max_length=200)
+    body = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    expiration_date = models.DateTimeField(blank=False, null=False)
+    ubication = models.ForeignKey(Ubication, on_delete=models.CASCADE, blank=False, null=True)
+    blood_types = (
+        (0,'A+'),
+        (1,'A-'),
+        (2,'B+'),
+        (3,'B-'),
+        (4, 'AB+'),
+        (5, 'AB-'),
+        (6, 'O+'),
+        (7, 'O-')
+    )
+    blood_type = models.PositiveSmallIntegerField(choices=blood_types, blank=False, null=False)
+    photo = models.ImageField(upload_to="ImagenesPedidos", blank = True, null = True) #https://docs.djangoproject.com/en/4.2/topics/files/
+
+    def __str__(self):
+        return f"{self.pk}:{self.title[:20]}"

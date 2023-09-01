@@ -1,0 +1,38 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+<div align = "center">
+  <br>
+  <h4>Nueva solicitud de donantes de sangre</h4>
+  <form method="POST" class="post-form">{% csrf_token %}
+      <div>
+        <b>Titulo *</b> <br>
+        {{form.title}} <br><br>
+      </div>
+      <div>
+        <b>¿Qué grupo y factor? *</b><br>
+        {{form.blood_type}}   <br><br>
+      </div>
+      <div>
+        <b>¿Dónde? *<br></b>
+        {{form.ubication}}  <br><br>
+      </div>
+      <div>
+        <b>Agregá toda la información que consideres necesaria: *</b><br>
+        {{form.body}} <br><br>
+      </div>
+      <div>
+        {{form.photo}} <br><br>
+      </div>
+      <div>
+        <b>Fecha de finalización del pedido * </b><br>
+        {{form.expiration_date}} <br><br>
+      </div>  
+      <button type="submit" class="btn btn-outline-danger"">Guardar</button>
+      <br>
+  </form>
+
+</div>
+    
+{% endblock %}
