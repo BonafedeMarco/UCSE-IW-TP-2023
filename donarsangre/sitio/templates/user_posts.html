@@ -12,13 +12,19 @@
   {% for post in lista_posteos %}
 <div align="center">
     <br>
-    <h6>{{ post.created_date|date:"d/m/Y" }}</h6>
-    <h5> {{ post.title|upper }}</h5>
-    <b>{{ post.blood_type }} | acá debería ir el tipo de sangre pero muestra el id. </b> <br>
+    <h4> <b> {{ post.get_blood_type_display }} | {{ post.liters_required }} L</b> </h4>
+    <br>
+    <h5> <b> {{ post.title|upper }} </b> </h5>
+    <h6> {{ post.body|truncatechars:20 }} </h6>
+    <br>
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
-    </svg><b>{{ post.location }}</b>  <br><br>
-    Finaliza: {{post.expiration_date|date:"d/m/Y"}} <br>
+    </svg>
+    <b> {{ post.location }}</b>
+    <br>
+    <br>
+    <h6>Creada: {{ post.created_date|date:"d/m/Y" }}</h6>
+    <h6>Finaliza: {{post.expiration_date|date:"d/m/Y"}}</h6>
     <button type="button" class="btn btn-dark btn-sm" button style="margin: 10px">ver detalle</button>
     <br>
     <button type="button" class="btn btn-danger btn-sm" button style="margin: 10px">Eliminar</button>

@@ -76,7 +76,7 @@ class Post (models.Model):
         (6, 'O+'),
         (7, 'O-')
     )
-    blood_type = models.PositiveSmallIntegerField(choices=blood_types, default='0', blank=False, null=False)
+    blood_type = models.PositiveSmallIntegerField(choices=blood_types, blank=False, null=False)
     liters_required = models.FloatField(default = 0, blank=False, null=False)
     photo = models.ImageField(upload_to="ImagenesPedidos", blank = True, null = True) #https://docs.djangoproject.com/en/4.2/topics/files/
 
