@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
@@ -42,3 +42,7 @@ def post_list(request): #Muestra todas las publicaciones no vencidas.
 def user_posts(request): #Muestra las publicaciones del usuario logueado.
     posteos = Post.objects.filter(author = request.user).order_by("-created_date")
     return render(request, 'user_posts.html', {'lista_posteos':posteos})
+
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'post_detail.html', {'post': post})

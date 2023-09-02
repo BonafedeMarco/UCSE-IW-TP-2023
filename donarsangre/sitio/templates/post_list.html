@@ -14,7 +14,8 @@
     <br>
     <h6>Creada: {{ post.created_date|date:"d/m/Y" }}</h6>
     <h6>Finaliza: {{post.expiration_date|date:"d/m/Y"}}</h6>
-    <button type="button" class="btn btn-dark btn-sm">Ver detalle</button>
+    <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-dark btn-sm">Ver detalle</a>
     <h5>_______________________________________</h5>
 </div>
 {% endfor %}
+

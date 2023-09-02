@@ -35,5 +35,5 @@ urlpatterns = [
     path('informacion/login/', auth_views.LoginView.as_view()),
     path("registro/", SignUpView.as_view(), name="registro"),
     path("user_posts/", views.user_posts, name="user_posts"),
-
+    path('detail/<int:pk>/', views.post_detail, name='post_detail'),
 ]
