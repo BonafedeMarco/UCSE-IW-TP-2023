@@ -26,7 +26,7 @@ from sitio.views import SignUpView
 """from sitio.views import SignUpView"""
 
 urlpatterns = [
-    path('inicio/', views.post_list),
+    path('inicio/', views.post_list, name='home'),
     path('new_post', views.new_post, name='new_post'),
     path('informacion/', views.informacion, name = 'informacion'),
     path('admin/', admin.site.urls),
@@ -35,5 +35,5 @@ urlpatterns = [
     path('informacion/login/', auth_views.LoginView.as_view()),
     path("registro/", SignUpView.as_view(), name="registro"),
     path("user_posts/", views.user_posts, name="user_posts"),
-   
+
 ]

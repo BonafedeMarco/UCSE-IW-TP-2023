@@ -15,8 +15,12 @@
         {{form.blood_type}}   <br><br>
       </div>
       <div>
+	<b>¿Cuantos litros requiere? *<b><br>
+	{{ form.liters_required }} <br><br>
+      </div>
+      <div>
         <b>¿Dónde? *<br></b>
-        {{form.ubication}}  <br><br>
+        {{form.location}}  <br><br>
       </div>
       <div>
         <b>Agregá toda la información que consideres necesaria: *</b><br>
@@ -28,11 +32,11 @@
       <div>
         <b>Fecha de finalización del pedido * </b><br>
         {{form.expiration_date}} <br><br>
-      </div>  
+      </div>
       <button type="submit" class="btn btn-outline-danger"">Guardar</button>
       <br>
   </form>
 
 </div>
-    
+
 {% endblock %}

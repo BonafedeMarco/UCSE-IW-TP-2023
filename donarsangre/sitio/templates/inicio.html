@@ -7,9 +7,9 @@
 <div align="center">
   {% if user.is_authenticated %}
   <a href="{% url 'new_post' %}" type="button" class="btn btn-danger" button style="margin: 10px" >Nueva solicitud</a>
-  {% endif %}
   <h5>_______________________________________</h5>
+  {% endif %}
 </div>
-    
+
     {% include 'post_list.html' %}
 {% endblock %}

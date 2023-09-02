@@ -7,7 +7,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'blood_type','ubication','body', 'photo', 'expiration_date']
+        fields = ['title', 'blood_type', 'liters_required', 'location','body', 'photo', 'expiration_date']
         widgets = {
             'expiration_date': forms.DateInput(attrs={'type': 'date'}),
         }

@@ -3,8 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from sitio.forms import PostForm
 from django.shortcuts import redirect
+from sitio.forms import PostForm
 from sitio.models import Post
 from datetime import datetime
 
@@ -36,9 +36,9 @@ def new_post(request):
     return render(request, 'new_post.html', {'form': form})
 
 def post_list(request): #Muestra todas las publicaciones no vencidas.
-    posteos = Post.objects.order_by("-created_date")[:3] #Falta agregar filtro por defecto de que muestre las no vencidas.
+    posteos = Post.objects.filter(expiration_date__gte=datetime.now()).order_by("-created_date") #Falta agregar filtro por defecto de que muestre las no vencidas.
     return render(request, 'inicio.html', {'lista_posteos': posteos})
 
-def user_posts(request): #Muestra las publicaciones del usuario logueado. 
-    posteos = Post.objects.filter(author = request.user).order_by("-created_date")[:3]
+def user_posts(request): #Muestra las publicaciones del usuario logueado.
+    posteos = Post.objects.filter(author = request.user).order_by("-created_date")
     return render(request, 'user_posts.html', {'lista_posteos':posteos})

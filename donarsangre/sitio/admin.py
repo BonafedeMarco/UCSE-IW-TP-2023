@@ -1,5 +1,5 @@
 from django.contrib import admin
-from sitio.models import Post, Ubication
+from sitio.models import Post, Location
 
 # Register your models here.
 
@@ -9,10 +9,10 @@ class AdminPost(admin.ModelAdmin):
     search_fields = ('body', )
     date_hierarchy = 'created_date'
 
-class AdminUbication(admin.ModelAdmin):
+class AdminLocation(admin.ModelAdmin):
     list_display = ('id', 'nombre',)
     list_filter = ('id', 'nombre',)
 
 
 admin.site.register(Post, AdminPost)
-admin.site.register(Ubication, AdminUbication)
+admin.site.register(Location, AdminLocation)
