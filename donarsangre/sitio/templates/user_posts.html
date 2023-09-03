@@ -25,9 +25,9 @@
     <br>
     <h6>Creada: {{ post.created_date|date:"d/m/Y" }}</h6>
     <h6>Finaliza: {{post.expiration_date|date:"d/m/Y"}}</h6>
-    <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-dark btn-sm" button style="margin: 10px">ver detalle</a>
     <br>
-    <button type="button" class="btn btn-danger btn-sm" button style="margin: 10px">Eliminar</button>
+    <a href="{% url 'delete_post' pk=post.pk %}" class="btn btn-danger btn-sm" button style="margin: 10px">Eliminar</a>
+    <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-dark btn-sm" button style="margin: 10px">Ver detalle</a>
 
     <h5>_______________________________________</h5>
 </div>

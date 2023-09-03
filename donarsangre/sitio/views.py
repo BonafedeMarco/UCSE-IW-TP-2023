@@ -46,3 +46,8 @@ def user_posts(request): #Muestra las publicaciones del usuario logueado.
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'post_detail.html', {'post': post})
+
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect("/user_posts/")
