@@ -11,11 +11,13 @@
   <h5> <b> {{ post.title|upper }} </b> </h5>
   <h6> {{ post.body }} </h6>
   <br>
+  <img src="{{ MEDIA_URL }}{{ post.photo.url }}" style="max-height:300px"></img>
+  <br>
+  <br>
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
       <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
   </svg>
   <b> {{ post.location }}</b>
-  <b> {{ post.photo }}</b>
   <br>
   <br>
   <h6>Creada: {{ post.created_date|date:"d/m/Y" }}</h6>

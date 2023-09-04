@@ -28,6 +28,7 @@ def new_post(request):
         form = PostForm(request.POST)
         if form.is_valid():
             nueva = form.save(commit=False)
+            nueva.photo = request.FILES['photo']
             nueva.author = request.user
             nueva.save()
             return redirect("/inicio/")

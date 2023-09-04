@@ -21,7 +21,8 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from sitio.views import SignUpView
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 """from sitio.views import SignUpView"""
 
@@ -38,3 +39,6 @@ urlpatterns = [
     path('detail/<int:pk>/', views.post_detail, name='post_detail'),
     path('delete/<int:pk>/', views.delete_post, name='delete_post'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

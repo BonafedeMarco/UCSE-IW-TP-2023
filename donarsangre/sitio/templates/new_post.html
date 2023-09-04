@@ -5,7 +5,8 @@
 <div align = "center">
   <br>
   <h4>Nueva solicitud de donantes de sangre</h4>
-  <form method="POST" class="post-form">{% csrf_token %}
+  <form method="POST" class="post-form" enctype="multipart/form-data">
+  {% csrf_token %}
       <div>
         <b>Titulo *</b> <br>
         {{form.title}} <br><br>

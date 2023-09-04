@@ -78,7 +78,7 @@ class Post (models.Model):
     )
     blood_type = models.PositiveSmallIntegerField(choices=blood_types, blank=False, null=False)
     liters_required = models.FloatField(default = 0, blank=False, null=False)
-    photo = models.ImageField(upload_to="ImagenesPedidos", blank = True, null = True) #https://docs.djangoproject.com/en/4.2/topics/files/
+    photo = models.ImageField(upload_to="ImagenesPedidos/", blank = True, null = True)
 
     def __str__(self):
         return f"{self.pk}:{self.title[:20]}"
