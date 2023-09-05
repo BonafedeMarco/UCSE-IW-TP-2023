@@ -3,13 +3,22 @@
 
 {% block title %}DonaSangreHoy!{% endblock %}
 {% block content %}
+<script type="text/javascript">
+    function clearFilters()
+    {
+	    document.form.factorGrupo.value = "";
+	    document.form.localidad.value = "";
+	    document.form.fechaDesde.value = "";
+	    document.form.fechaHasta.value = "";
+    }
+</script>
 <br>
 <div align="center">
   <div class="filtros">
-    <form method="get">
+    <form name="form" id="form" method="get">
 
-                    <label for="factor-grupo" style="margin: 10px">Factor y Grupo:</label>
-                    <select name="factor-grupo" id="factor-grupo">
+                    <label for="factorGrupo" style="margin: 10px">Factor y Grupo:</label>
+                    <select name="factorGrupo" id="factorGrupo">
                         <option value="">---</option>
                         {% for factorGrupo_obj in factores_grupos %}
                             <option value="{{ factorGrupo_obj.blood_type }}" {% if factorGrupo_obj.blood_type == request.GET.factorGrupo %}selected{% endif %}>{{ factorGrupo_obj.blood_type }}</option>
@@ -25,11 +34,12 @@
                     </select>
 
                     <label for="rango-fecha-expiracion" style="margin: 10px">Expira entre:</label>
-                    <input type="date" name="fecha-desde" id="fecha-desde">
+		    <input type="date" name="fechaDesde" id="fechaDesde" value='{{ request.GET.fechaDesde }}'>
                     <label style="margin: 10px">y</label>
-                    <input type="date" name="fecha-hasta" id="fecha-hasta">
+                    <input type="date" name="fechaHasta" id="fechaHasta" value='{{ request.GET.fechaHasta}}'>
 
 
+                    <button onclick="clearFilters();" type="submit" class="btn btn-dark-outline btn-sm" style="margin: 10px">Limpiar</button>
                     <button type="submit" class="btn btn-dark btn-sm" style="margin: 10px">Aplicar</button>
     </form>
   </div>
