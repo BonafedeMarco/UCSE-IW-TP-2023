@@ -41,12 +41,14 @@ def new_post(request):
     return render(request, 'new_post.html', {'form': form})
 
 def post_list(request): #Muestra todas las publicaciones no vencidas.
-    posteos = Post.objects.filter(expiration_date__gte=datetime.now()).order_by("-created_date")
+    posteos = Post.objects.filter(expiration_date__gte=datetime.now()).order_by("expiration_date")
     localidades = Location.objects.all()
     tipos = BloodType.objects.all()
 
     localidad = request.GET.get('localidad')
-    factorGrupo = request.GET.get('factor-grupo')
+    factorGrupo = request.GET.get('factorGrupo')
+    fechaDesde = request.GET.get('fechaDesde')
+    fechaHasta = request.GET.get('fechaHasta')
 
     if localidad:
         posteos = posteos.filter(location__nombre = localidad)
@@ -54,7 +56,13 @@ def post_list(request): #Muestra todas las publicaciones no vencidas.
     if factorGrupo:
         posteos = posteos.filter(blood_type__blood_type = factorGrupo)
 
-    return render(request, 'inicio.html', {'lista_posteos': posteos, 'localidades' : localidades, 'factores_grupos' : tipos})
+    if fechaDesde:
+        posteos = posteos.filter(expiration_date__gte = fechaDesde)
+
+    if fechaHasta:
+        posteos = posteos.filter(expiration_date__lte = fechaHasta)
+
+    return render(request, 'inicio.html', {'lista_posteos': posteos, 'localidades' : localidades, 'factores_grupos' : tipos })
 
 def user_posts(request): #Muestra las publicaciones del usuario logueado.
     posteos = Post.objects.filter(author = request.user).order_by("-created_date")
