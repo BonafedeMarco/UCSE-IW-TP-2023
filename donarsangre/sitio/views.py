@@ -5,7 +5,7 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from sitio.forms import PostForm
-from sitio.models import Post
+from sitio.models import Post, Location, BloodType
 from datetime import datetime
 
 def inicio(request):
@@ -28,7 +28,11 @@ def new_post(request):
         form = PostForm(request.POST)
         if form.is_valid():
             nueva = form.save(commit=False)
-            nueva.photo = request.FILES['photo']
+            photo = request.FILES.get('photo', False)
+            if not photo:
+                nueva.photo = None
+            else:
+                nueva.photo = photo
             nueva.author = request.user
             nueva.save()
             return redirect("/inicio/")
@@ -37,8 +41,20 @@ def new_post(request):
     return render(request, 'new_post.html', {'form': form})
 
 def post_list(request): #Muestra todas las publicaciones no vencidas.
-    posteos = Post.objects.filter(expiration_date__gte=datetime.now()).order_by("-created_date") #Falta agregar filtro por defecto de que muestre las no vencidas.
-    return render(request, 'inicio.html', {'lista_posteos': posteos})
+    posteos = Post.objects.filter(expiration_date__gte=datetime.now()).order_by("-created_date")
+    localidades = Location.objects.all()
+    tipos = BloodType.objects.all()
+
+    localidad = request.GET.get('localidad')
+    factorGrupo = request.GET.get('factor-grupo')
+
+    if localidad:
+        posteos = posteos.filter(location__nombre = localidad)
+
+    if factorGrupo:
+        posteos = posteos.filter(blood_type__blood_type = factorGrupo)
+
+    return render(request, 'inicio.html', {'lista_posteos': posteos, 'localidades' : localidades, 'factores_grupos' : tipos})
 
 def user_posts(request): #Muestra las publicaciones del usuario logueado.
     posteos = Post.objects.filter(author = request.user).order_by("-created_date")

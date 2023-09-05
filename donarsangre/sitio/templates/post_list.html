@@ -1,7 +1,7 @@
 {% for post in lista_posteos %}
 <div align="center">
     <br>
-    <h4> <b> {{ post.get_blood_type_display }} | {{ post.liters_required }} L</b> </h4>
+    <h4> <b> {{ post.blood_type }} | {{ post.liters_required }} L</b> </h4>
     <br>
     <h5> <b> {{ post.title|upper }} </b> </h5>
     <h6> {{ post.body|truncatechars:20 }} </h6>
@@ -18,4 +18,3 @@
     <h5>_______________________________________</h5>
 </div>
 {% endfor %}
-

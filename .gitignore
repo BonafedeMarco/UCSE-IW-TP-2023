@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 donarsangre/venv_donarsangre/*
-media/*
+donarsangre/media/*

@@ -46,37 +46,33 @@ class Donacion(models.Model):
         return f"{self.fecha} - {self.litrosDonados} L - {self.donante.nombreCompleto}"
 
 """
-class Profile (models.Model):
+
+class Profile(models.Model):
     user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     location = models.CharField(max_length=255, null=True, blank=True)
     blood_type = models.CharField(max_length=255, null=True, blank=True)
 
 
-class Location (models.Model):
+class Location(models.Model):
     nombre = models.CharField(max_length=200)
 
     def __str__(self):
         return self.nombre
 
+class BloodType(models.Model):
+    blood_type = models.CharField(max_length=4, blank=False, null=False)
 
-class Post (models.Model):
+    def __str__(self):
+        return self.blood_type
+
+class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=200)
     body = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     expiration_date = models.DateTimeField(blank=False, null=False)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=False, null=True)
-    blood_types = (
-        (0,'A+'),
-        (1,'A-'),
-        (2,'B+'),
-        (3,'B-'),
-        (4, 'AB+'),
-        (5, 'AB-'),
-        (6, 'O+'),
-        (7, 'O-')
-    )
-    blood_type = models.PositiveSmallIntegerField(choices=blood_types, blank=False, null=False)
+    blood_type = models.ForeignKey(BloodType, on_delete=models.CASCADE, blank=False, null=False)
     liters_required = models.FloatField(default = 0, blank=False, null=False)
     photo = models.ImageField(upload_to="ImagenesPedidos/", blank = True, null = True)
 
