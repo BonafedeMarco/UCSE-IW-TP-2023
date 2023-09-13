@@ -1,6 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from captcha.fields import ReCaptchaField
 from sitio.models import Post
 
 class PostForm(forms.ModelForm):
@@ -11,3 +13,9 @@ class PostForm(forms.ModelForm):
         widgets = {
             'expiration_date': forms.DateInput(attrs={'type': 'date'}),
         }
+
+class CustomUserForm(UserCreationForm):
+	email = forms.EmailField(max_length=200, help_text='Required')
+	class Meta:
+		model = User
+		fields = ('username','email', 'password1', 'password2')
