@@ -1,12 +1,25 @@
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.forms import authenticate, UserCreationForm,AuthenticationForm, UserChangeForm
+from django.contrib.auth import login as do_login
+from django.contrib.auth import logout as do_logout
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
-from sitio.forms import PostForm
-from sitio.models import Post, Location, BloodType
+from sitio.forms import PostForm, CustomUserForm
+from sitio.models import Post, Location, BloodType, Profile
 from datetime import datetime
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import EmailMessage
+from django.contrib.auth.models import User
+from .tokens import account_activation_token
+import hashlib, datetime, random
+from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
+from datetime import datetime
+
+
 
 def inicio(request):
     return render(request, 'inicio.html', {})
@@ -16,12 +29,26 @@ def informacion(request):
     return render(request, 'informacion.html', {})
 
 def login(request):
-    return render(request, 'login.html', {})
+    form = AuthenticationForm()
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                do_login(request, user)
+                return render(request, "inicio.html", {})
+
+    # Si llegamos al final renderizamos el formulario
+    return render(request, "registration/login.html", {'form': form})
 
 class SignUpView(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
+
 
 def new_post(request):
     if request.method == "POST":
@@ -77,3 +104,90 @@ def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect("/user_posts/")
+
+def pantalla_intermedia(request):
+    return render (request, 'pantalla_intermedia.html', {})
+
+def register(request):
+    form = CustomUserForm()
+    if  request.method == "POST":
+        form = CustomUserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit= False)
+            user.is_active = False
+            user.save()
+            Profile.objects.create(user=user)
+            uidb64= urlsafe_base64_encode(force_bytes(user.pk)) # crea el token encodeado
+            domain = get_current_site(request).domain
+            link= reverse('activate', kwargs={'uidb64':uidb64,'token':account_activation_token.make_token(user)}) # arma el link de activacion
+
+            activate_url = domain+link # le agrega el dominio al link
+
+            mail_subject = 'Activa tu cuenta' 
+
+            message = 'Hola '+ user.username + \
+                ' Verifica tu cuenta con el siguiente link:\n' + activate_url
+
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+            mail_subject, message, to=[to_email]
+            )
+            email.send(fail_silently=False)
+
+            return redirect('/pantalla_intermedia')
+        else:
+            form = CustomUserForm(request.POST)
+    return render(request, "registration/signup.html", {'form': form})
+     # Si existe el usuario
+    if user is not None:
+                # Hacemos el login manualmente
+                do_login(request, user)
+                # Y le redireccionamos a la portada
+                return redirect('/pantalla_intermedia')
+
+
+"""def activate(request, uidb64=None, token=None):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+
+        if not account_activation_token.check_token(user,token):
+            return HttpResponseRedirect('login/'+'?message='+'El usuario ya esta activado')
+
+        if user.is_active:
+            return HttpResponseRedirect('login/')
+        user.is_active=True
+        user.save()   
+        return HttpResponseRedirect('login/')
+
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    return HttpResponseRedirect('login/')
+    """
+
+def activate(request, uidb64=None, token=None):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+
+        if not account_activation_token.check_token(user,token):
+            return HttpResponseRedirect('/login'+'?message='+'El usuario ya esta activado')
+
+        if user.is_active:
+            return HttpResponseRedirect('/login')
+        user.is_active=True
+        user.save()   
+
+        # messages.success(request,'La cuenta se activo correctamente')
+        return HttpResponseRedirect('/login')
+
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+   
+    return HttpResponseRedirect('/login')
+
+def logout(request):
+    do_logout(request)
+    return render(request, "inicio.html", {})

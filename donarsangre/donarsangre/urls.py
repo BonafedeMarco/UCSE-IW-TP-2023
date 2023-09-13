@@ -23,15 +23,22 @@ from django.contrib.auth import views as auth_views
 from sitio.views import SignUpView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import include
+
 
 """from sitio.views import SignUpView"""
 
 urlpatterns = [
+    path('register/', views.register, name='register'),
+    path('pantalla_intermedia/', views.pantalla_intermedia, name='pantalla_intermedia'),
+    path('activate/<uidb64>/<token>/',views.activate, name='activate'),
     path('inicio/', views.post_list, name='home'),
     path('new_post', views.new_post, name='new_post'),
     path('informacion/', views.informacion, name = 'informacion'),
     path('admin/', admin.site.urls),
-    path("login/", include("django.contrib.auth.urls")),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name = 'logout'),
+    #path("login/", include("django.contrib.auth.urls")),
     path('', views.post_list, name='inicio'),
     path('informacion/login/', auth_views.LoginView.as_view()),
     path("registro/", SignUpView.as_view(), name="registro"),
