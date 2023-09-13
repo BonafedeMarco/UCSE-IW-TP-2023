@@ -39,7 +39,7 @@ def login(request):
 
             if user is not None:
                 do_login(request, user)
-                return render(request, "/inicio/", {})
+                return redirect("/inicio/")
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "registration/login.html", {'form': form})
@@ -125,8 +125,8 @@ def register(request):
 
             mail_subject = 'Activa tu cuenta'
 
-            message = 'Hola '+ user.username + \
-                ' Verifica tu cuenta con el siguiente link:\n' + activate_url
+            message = 'Hola '+ user.username + '! '+\
+                'Gracias por registrarte! Activá tu cuenta con el siguiente link:\n' + activate_url
 
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
@@ -190,4 +190,4 @@ def activate(request, uidb64=None, token=None):
 
 def logout(request):
     do_logout(request)
-    return render(request, "/inicio/", {})
+    return redirect("/inicio/")
