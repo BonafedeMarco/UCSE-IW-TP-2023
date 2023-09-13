@@ -39,7 +39,7 @@ def login(request):
 
             if user is not None:
                 do_login(request, user)
-                return render(request, "inicio.html", {})
+                return render(request, "/inicio/", {})
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "registration/login.html", {'form': form})
@@ -123,7 +123,7 @@ def register(request):
 
             activate_url = domain+link # le agrega el dominio al link
 
-            mail_subject = 'Activa tu cuenta' 
+            mail_subject = 'Activa tu cuenta'
 
             message = 'Hola '+ user.username + \
                 ' Verifica tu cuenta con el siguiente link:\n' + activate_url
@@ -157,7 +157,7 @@ def register(request):
         if user.is_active:
             return HttpResponseRedirect('login/')
         user.is_active=True
-        user.save()   
+        user.save()
         return HttpResponseRedirect('login/')
 
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
@@ -177,7 +177,7 @@ def activate(request, uidb64=None, token=None):
         if user.is_active:
             return HttpResponseRedirect('/login')
         user.is_active=True
-        user.save()   
+        user.save()
 
         # messages.success(request,'La cuenta se activo correctamente')
         return HttpResponseRedirect('/login')
@@ -185,9 +185,9 @@ def activate(request, uidb64=None, token=None):
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
-   
+
     return HttpResponseRedirect('/login')
 
 def logout(request):
     do_logout(request)
-    return render(request, "inicio.html", {})
+    return render(request, "/inicio/", {})
