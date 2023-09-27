@@ -191,3 +191,6 @@ def activate(request, uidb64=None, token=None):
 def logout(request):
     do_logout(request)
     return redirect("/inicio/")
+
+def update_progress(request):
+    return render(request, 'update_progress.html', {})

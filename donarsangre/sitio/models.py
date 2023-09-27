@@ -75,6 +75,7 @@ class Post(models.Model):
     blood_type = models.ForeignKey(BloodType, on_delete=models.CASCADE, blank=False, null=False)
     liters_required = models.FloatField(default = 0, blank=False, null=False)
     photo = models.ImageField(upload_to="ImagenesPedidos/", blank = True, null = True)
+    liters_donated = models.FloatField(default = 0, blank=False, null=False)
 
     def __str__(self):
         return f"{self.pk}:{self.title[:20]}"
