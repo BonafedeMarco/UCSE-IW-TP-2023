@@ -1,16 +1,28 @@
-
 {% extends 'base.html' %}
-
-{% block title %}Dona Sangre Hoy{% endblock %}
-
 {% block content %}
-<html>
-    <head>
-        <title>DonaSangreHoy: información importante</title>
-    </head>
-    <body>
-        <br>
-        Agregar formulario  
-    </body>
-</html>
+<form method="POST" class="post-form" enctype="multipart/form-data">
+    {% csrf_token %}
+<div align="center">
+  <br>
+  <h5>_______________________________________</h5>
+  <h6 style="color:red;">Solicitante: {{ post.author }}</h6>
+  <h5> <b> {{ post.title|upper }} </b> </h5>
+  <h4> <b> Grupo y factor requerido: <b style="color:red;">{{ post.blood_type }}</b></b></h4>
+  <h5> <b> Litros requeridos: <b style="color:red;">{{ post.liters_required }} </b></b> </h5>
+  <h5> <b> Litros donados hasta el momento: <b style="color:red;">{{post.liters_donated}} </b></b> </h5>
+  <br>
+  <h5> <b> Actualización litros donados: <b style="color:red;">{{form.liters_donated}} </b></b> </h5>
+  <br>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
+  </svg>
+  <b> {{ post.location }}</b>
+  <br>
+  <br>
+  <button type="submit" class="btn btn-outline-danger">Actualizar</button>
+  <h5>_______________________________________</h5>
+  
+</div>
+</form>
 {% endblock %}

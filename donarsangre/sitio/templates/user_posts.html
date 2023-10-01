@@ -13,13 +13,7 @@
 <div align="center">
     <br>
     <h4> <b> {{ post.blood_type }} | {{ post.liters_required }} L</b> </h4>
-
-    <div style="margin:5px 650px">
-      <div class="progress" role="progressbar" aria-label="Danger example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar bg-danger" style="width: 100%">100%</div>
-      </div>
-    </div>
-  
+    <h6> <b> Litros donados: <b style="color:red;">{{post.liters_donated}} </b></b> </h6>
     <br>
     <h5> <b> {{ post.title|upper }} </b> </h5>
     <h6> {{ post.body|truncatechars:20 }} </h6>
@@ -33,7 +27,7 @@
     <h6>Creada: {{ post.created_date|date:"d/m/Y" }}</h6>
     <h6>Finaliza: {{post.expiration_date|date:"d/m/Y"}}</h6>
     <br>
-    <a href="{% url 'update_progress' %}" class="btn btn-outline-danger btn-sm" button style="margin: 10px">Actualizar donación</a>
+    <a href="{% url 'update_progress' pk=post.pk %}" class="btn btn-outline-danger btn-sm" button style="margin: 10px">Actualizar donación</a>
     <br>
     <a href="{% url 'delete_post' pk=post.pk %}" class="btn btn-danger btn-sm" button style="margin: 10px">Eliminar</a>
     <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-dark btn-sm" button style="margin: 10px">Ver detalle</a>

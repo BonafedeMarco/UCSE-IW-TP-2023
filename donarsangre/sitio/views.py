@@ -192,5 +192,37 @@ def logout(request):
     do_logout(request)
     return redirect("/inicio/")
 
-def update_progress(request):
-    return render(request, 'update_progress.html', {})
+
+def update_progress(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.liters_donated = request.liters_donated
+            post.save()
+            return redirect("/inicio/")
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'update_progress.html', {'form': form, 'post': post})
+
+
+
+"""def new_post(request):
+
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            nueva = form.save(commit=False)
+            photo = request.FILES.get('photo', False)
+            if not photo:
+                nueva.photo = None
+            else:
+                nueva.photo = photo
+            nueva.author = request.user
+            nueva.save()
+            return redirect("/inicio/")
+    else:
+        form = PostForm()
+    return render(request, 'new_post.html', {'form': form})
+    """

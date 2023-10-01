@@ -45,7 +45,7 @@ urlpatterns = [
     path("user_posts/", views.user_posts, name="user_posts"),
     path('detail/<int:pk>/', views.post_detail, name='post_detail'),
     path('delete/<int:pk>/', views.delete_post, name='delete_post'),
-    path('update_progress', views.update_progress, name = 'update_progress'),
+    path('update_progress/<int:pk>/', views.update_progress, name = 'update_progress'),
 ]
 
 if settings.DEBUG:
