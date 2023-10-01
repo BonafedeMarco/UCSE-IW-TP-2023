@@ -76,6 +76,7 @@ class Post(models.Model):
     liters_required = models.FloatField(default = 0, blank=False, null=False)
     photo = models.ImageField(upload_to="ImagenesPedidos/", blank = True, null = True)
     liters_donated = models.FloatField(default = 0, blank=False, null=False, max_length = liters_required)
+    estado = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.pk}:{self.title[:20]}"
