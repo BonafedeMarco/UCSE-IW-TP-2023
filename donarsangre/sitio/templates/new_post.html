@@ -1,5 +1,14 @@
 <!-- templates/home.html-->
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head_content %}
+	<style type="text/css">
+          #map{ width:600px; height: 350px; }
+        </style>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSHD4vrWK98EPYTW8Ziu0alqTvXlpRrto&libraries=places&callback=initMap" async defer></script>
+	<script type="text/javascript" src="{% static "postCreateMap.js" %}"></script>
+{% endblock %}
 
 {% block content %}
 <div align = "center">
@@ -20,8 +29,15 @@
 	{{ form.liters_required }} <br><br>
       </div>
       <div>
-        <b>¿Dónde? *<br></b>
+        <b>¿Ciudad? *<br></b>
         {{form.location}}  <br><br>
+      </div>
+      <div>
+        <b>¿Ubicación del establecimiento? *<br></b>
+        <div id="map"></div>
+	<input hidden="true" type="text" id="id_latitud" readonly="yes"><br>
+    	<input hidden="true" type="text" id="id_longitud" readonly="yes">
+
       </div>
       <div>
         <b>Agregá toda la información que consideres necesaria: *</b><br>

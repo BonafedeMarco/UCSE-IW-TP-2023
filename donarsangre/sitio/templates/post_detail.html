@@ -1,4 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head_content %}
+	<style type="text/css">
+          #map{ width:600px; height: 350px; }
+        </style>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSHD4vrWK98EPYTW8Ziu0alqTvXlpRrto&callback=initMap" async defer></script>
+	<script type="text/javascript" src="{% static "postViewMap.js" %}"></script>
+	<script>
+		window.onload = function() {
+			initMap({{ post.latitud }}, {{ post.longitud }});
+		};
+	</script>
+{% endblock %}
+
 {% block content %}
 
 <div align="center">
@@ -22,6 +37,9 @@
       <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
   </svg>
   <b> {{ post.location }}</b>
+  <b> {{ post.latitud }}</b>
+  <b> {{ post.longitud }}</b>
+  <div id="map"></div>
   <br>
   <br>
   <h6>Creada: {{ post.created_date|date:"d/m/Y" }}</h6>
