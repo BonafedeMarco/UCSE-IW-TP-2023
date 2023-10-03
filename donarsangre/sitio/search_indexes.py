@@ -9,7 +9,6 @@ class PostIndex(indexes.SearchIndex, indexes.Indexable):
     liters_required = indexes.FloatField(model_attr='liters_required')
     location = indexes.CharField(model_attr='location')
     body = indexes.CharField(model_attr='body')
-    pk = indexes.IntegerField(model_attr='pk')
 
     def get_model(self):
         return Post
