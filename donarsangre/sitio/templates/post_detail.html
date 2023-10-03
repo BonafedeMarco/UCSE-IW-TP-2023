@@ -7,7 +7,7 @@
         </style>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSHD4vrWK98EPYTW8Ziu0alqTvXlpRrto&callback=initMap" async defer></script>
 	<script type="text/javascript" src="{% static "postViewMap.js" %}"></script>
-	<script>
+  <script>
 		window.onload = function() {
 			initMap({{ post.latitud }}, {{ post.longitud }});
 		};
@@ -38,6 +38,12 @@
   </svg>
   <b> {{ post.location }}</b>
   <div id="map"></div>
+  <br>
+  <br>
+
+  <a href="https://twitter.com/intent/tweet?hashtags=donasangrehoy&url=donasangrehoy.onrender.com/detail/{{post.pk}}&text={{ post.title }} - {{post.location}}" 
+  class="twitter-share-button" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
   <br>
   <br>
   <h6>Creada: {{ post.created_date|date:"d/m/Y" }}</h6>
