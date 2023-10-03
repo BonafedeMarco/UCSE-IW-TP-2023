@@ -77,8 +77,8 @@ class Post(models.Model):
     photo = models.ImageField(upload_to="ImagenesPedidos/", blank = True, null = True)
     liters_donated = models.FloatField(default = 0, blank=False, null=False, max_length = liters_required)
     estado = models.IntegerField(default=0)
-    latitud = models.CharField(max_length=50, blank=False, null=False)
-    longitud = models.CharField(max_length=50, blank=False, null=False)
+    latitud = models.CharField(max_length=50, default="-31.252606961483437", blank=False, null=False)
+    longitud = models.CharField(max_length=50, default="-61.49176597595215", blank=False, null=False)
 
     def __str__(self):
         return f"{self.pk}:{self.title[:20]}"
