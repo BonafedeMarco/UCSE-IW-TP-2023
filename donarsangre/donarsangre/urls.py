@@ -48,6 +48,7 @@ urlpatterns = [
     path('update_progress/<int:pk>/', views.update_progress, name = 'update_progress'),
     path('rebuild_index/', views.rebuild_index),
     path('search/', include('haystack.urls')),
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]
 
 if settings.DEBUG:
