@@ -192,7 +192,6 @@ def logout(request):
     do_logout(request)
     return redirect("/inicio/")
 
-
 def update_progress(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -206,7 +205,16 @@ def update_progress(request, pk):
         form = PostForm(instance=post)
     return render(request, 'update_progress.html', {'form': form, 'post': post})
 
+def rebuild_index(request):
+    from django.core.management import call_command
+    from django.http import JsonResponse
+    try:
+        call_command("rebuild_index", noinput=False)
+        result = "Index rebuilt"
+    except Exception as err:
+        result = f"Error: {err}"
 
+    return JsonResponse({"result": result})
 
 """def new_post(request):
 
