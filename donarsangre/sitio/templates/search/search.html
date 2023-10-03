@@ -17,9 +17,14 @@
         {% if query %}
 	    <br>
             <h3>Resultados:</h3>
-
+	    <h5>_______________________________________</h5>
             {% for result in page.object_list %}
-                <p>{{ result.titulo }}, {{ result.fecha }}</p>
+	        <p><b>Título:</b> {{ result.title }}</p>
+		<p><b>Sangre:</b> {{ result.blood_type }} | {{ result.liters_required }} L</p>
+                <p><b>Ciudad:</b> {{ result.location }}</p>
+                <p><b>Descripción:</b> {{ result.body }}</p>
+		<a href="/detail/{{ result.pk }}">Ver publicación</a>
+		<h5>_______________________________________</h5>
             {% empty %}
                 <p>No se encontraron pedidos de donación.</p>
             {% endfor %}
