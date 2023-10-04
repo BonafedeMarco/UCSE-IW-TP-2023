@@ -18,7 +18,7 @@ import hashlib, datetime, random
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from datetime import datetime
-
+from django.conf import settings
 
 
 def inicio(request):
@@ -65,7 +65,7 @@ def new_post(request):
             return redirect("/inicio/")
     else:
         form = PostForm()
-    return render(request, 'new_post.html', {'form': form})
+    return render(request, 'new_post.html', {'form': form, 'GOOGLE_API_KEY': settings.GOOGLE_API_KEY})
 
 def post_list(request): #Muestra todas las publicaciones no vencidas.
     posteos = Post.objects.filter(expiration_date__gte=datetime.now()).order_by("expiration_date")
@@ -97,7 +97,7 @@ def user_posts(request): #Muestra las publicaciones del usuario logueado.
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'post_detail.html', {'post': post})
+    return render(request, 'post_detail.html', {'post': post, 'GOOGLE_API_KEY': settings.GOOGLE_API_KEY})
 
 @login_required(login_url='login/')
 def delete_post(request, pk):

@@ -6,7 +6,7 @@
 	<style type="text/css">
           #map{ width:600px; height: 350px; }
         </style>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSHD4vrWK98EPYTW8Ziu0alqTvXlpRrto&libraries=places&callback=initMap" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places&callback=initMap" async defer></script>
 	<script type="text/javascript" src="{% static "postCreateMap.js" %}"></script>
 {% endblock %}
 

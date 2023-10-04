@@ -26,6 +26,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-vi!s1_sa3zwprtsvo*8=)@z5*oq%64eepvs*g7dw-c)73vo%kw'
+GOOGLE_API_KEY = os.environ.get('GOOGLE_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
