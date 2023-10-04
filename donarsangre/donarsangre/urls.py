@@ -45,7 +45,12 @@ urlpatterns = [
     path("user_posts/", views.user_posts, name="user_posts"),
     path('detail/<int:pk>/', views.post_detail, name='post_detail'),
     path('delete/<int:pk>/', views.delete_post, name='delete_post'),
+    path('update_progress/<int:pk>/', views.update_progress, name = 'update_progress'),
+    path('rebuild_index/', views.rebuild_index),
+    path('search/', include('haystack.urls')),
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

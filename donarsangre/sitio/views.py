@@ -18,7 +18,7 @@ import hashlib, datetime, random
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from datetime import datetime
-
+from django.conf import settings
 
 
 def inicio(request):
@@ -65,7 +65,7 @@ def new_post(request):
             return redirect("/inicio/")
     else:
         form = PostForm()
-    return render(request, 'new_post.html', {'form': form})
+    return render(request, 'new_post.html', {'form': form, 'GOOGLE_API_KEY': settings.GOOGLE_API_KEY})
 
 def post_list(request): #Muestra todas las publicaciones no vencidas.
     posteos = Post.objects.filter(expiration_date__gte=datetime.now()).order_by("expiration_date")
@@ -97,7 +97,7 @@ def user_posts(request): #Muestra las publicaciones del usuario logueado.
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'post_detail.html', {'post': post})
+    return render(request, 'post_detail.html', {'post': post, 'GOOGLE_API_KEY': settings.GOOGLE_API_KEY})
 
 @login_required(login_url='login/')
 def delete_post(request, pk):
@@ -191,3 +191,46 @@ def activate(request, uidb64=None, token=None):
 def logout(request):
     do_logout(request)
     return redirect("/inicio/")
+
+def update_progress(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.liters_donated = request.liters_donated
+            post.save()
+            return redirect("/inicio/")
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'update_progress.html', {'form': form, 'post': post})
+
+def rebuild_index(request):
+    from django.core.management import call_command
+    from django.http import JsonResponse
+    try:
+        call_command("rebuild_index", noinput=False)
+        result = "Index rebuilt"
+    except Exception as err:
+        result = f"Error: {err}"
+
+    return JsonResponse({"result": result})
+
+"""def new_post(request):
+
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            nueva = form.save(commit=False)
+            photo = request.FILES.get('photo', False)
+            if not photo:
+                nueva.photo = None
+            else:
+                nueva.photo = photo
+            nueva.author = request.user
+            nueva.save()
+            return redirect("/inicio/")
+    else:
+        form = PostForm()
+    return render(request, 'new_post.html', {'form': form})
+    """
