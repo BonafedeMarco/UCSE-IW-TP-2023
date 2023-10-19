@@ -162,3 +162,5 @@ cython_debug/
 donarsangre/venv_donarsangre/*
 donarsangre/media/*
 whoosh_index/
+
+googleAPIKey
