@@ -7,7 +7,7 @@ from sitio.models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'blood_type', 'liters_required', 'location', 'body', 'photo', 'latitud', 'longitud', 'expiration_date', 'liters_donated']
+        fields = ['title', 'blood_type', 'liters_required', 'location', 'body', 'photo', 'latitud', 'longitud', 'expiration_date']
         widgets = {
             'expiration_date': forms.DateInput(attrs={'type': 'date'}),
         }
