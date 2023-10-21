@@ -6,7 +6,7 @@ from django.contrib.auth import logout as do_logout
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from sitio.forms import PostForm, CustomUserForm
+from sitio.forms import PostForm, CustomUserForm, PostUpdateProgressForm
 from sitio.models import Post, Location, BloodType, Profile
 from datetime import datetime
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -145,27 +145,6 @@ def register(request):
                 # Y le redireccionamos a la portada
                 return redirect('/pantalla_intermedia')
 
-
-"""def activate(request, uidb64=None, token=None):
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-
-        if not account_activation_token.check_token(user,token):
-            return HttpResponseRedirect('login/'+'?message='+'El usuario ya esta activado')
-
-        if user.is_active:
-            return HttpResponseRedirect('login/')
-        user.is_active=True
-        user.save()
-        return HttpResponseRedirect('login/')
-
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    return HttpResponseRedirect('login/')
-    """
-
 def activate(request, uidb64=None, token=None):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -195,14 +174,15 @@ def logout(request):
 def update_progress(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = PostUpdateProgressForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
-            post.liters_donated = request.liters_donated
+            post.liters_donated = request.POST.get('liters_donated')
             post.save()
-            return redirect("/inicio/")
+            return HttpResponseRedirect('/detail/'+str(pk))
     else:
-        form = PostForm(instance=post)
+        form = PostUpdateProgressForm(instance=post)
+
     return render(request, 'update_progress.html', {'form': form, 'post': post})
 
 def rebuild_index(request):
@@ -215,22 +195,3 @@ def rebuild_index(request):
         result = f"Error: {err}"
 
     return JsonResponse({"result": result})
-
-"""def new_post(request):
-
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            nueva = form.save(commit=False)
-            photo = request.FILES.get('photo', False)
-            if not photo:
-                nueva.photo = None
-            else:
-                nueva.photo = photo
-            nueva.author = request.user
-            nueva.save()
-            return redirect("/inicio/")
-    else:
-        form = PostForm()
-    return render(request, 'new_post.html', {'form': form})
-    """

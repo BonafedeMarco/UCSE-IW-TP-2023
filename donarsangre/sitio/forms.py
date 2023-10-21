@@ -5,10 +5,9 @@ from django.contrib.auth.models import User
 from sitio.models import Post
 
 class PostForm(forms.ModelForm):
-
     class Meta:
         model = Post
-        fields = ['title', 'blood_type', 'liters_required', 'location', 'body', 'photo', 'latitud', 'longitud', 'expiration_date', 'liters_donated']
+        fields = ['title', 'blood_type', 'liters_required', 'location', 'body', 'photo', 'latitud', 'longitud', 'expiration_date']
         widgets = {
             'expiration_date': forms.DateInput(attrs={'type': 'date'}),
         }
@@ -18,3 +17,8 @@ class CustomUserForm(UserCreationForm):
 	class Meta:
 		model = User
 		fields = ('username','email', 'password1', 'password2')
+
+class PostUpdateProgressForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['liters_donated']
