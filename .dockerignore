@@ -1,0 +1,10 @@
+__pycache__
+googleAPIKey
+donarsangre/venv_donarsangre
+donarsangre/whoosh_index
+donarsangre/db.sqlite3
+Dockerfile
+build.sh
+run.sh
+dockerTest.sh
+dockerClean.sh
