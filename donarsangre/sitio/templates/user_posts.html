@@ -8,32 +8,38 @@
   {% if user.is_authenticated %}
   <a href="{% url 'new_post' %}" type="button" class="btn btn-danger" button style="margin: 10px" >Nueva solicitud</a>
   {% endif %}
-  <h5>_______________________________________</h5>
-  {% for post in lista_posteos %}
+
+{% for post in lista_posteos %}
 <div align="center">
     <br>
-    <h4> <b> {{ post.blood_type }} | {{ post.liters_required }} L</b> </h4>
-    <h6> <b> Litros donados: <b style="color:red;">{{post.liters_donated}} </b></b> </h6>
-    <br>
-    <h5> <b> {{ post.title|upper }} </b> </h5>
-    <h6> {{ post.body|truncatechars:20 }} </h6>
-    <br>
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
-    </svg>
-    <b> {{ post.location }}</b>
-    <br>
-    <br>
-    <h6>Creada: {{ post.created_date|date:"d/m/Y" }}</h6>
-    <h6>Finaliza: {{post.expiration_date|date:"d/m/Y"}}</h6>
-    <br>
-    <a href="{% url 'update_progress' pk=post.pk %}" class="btn btn-outline-danger btn-sm" button style="margin: 10px">Actualizar donación</a>
-    <br>
-    <a href="{% url 'delete_post' pk=post.pk %}" class="btn btn-danger btn-sm" button style="margin: 10px">Eliminar</a>
-    <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-dark btn-sm" button style="margin: 10px">Ver detalle</a>
-
-    <h5>_______________________________________</h5>
+    <div class="card border-danger mb-3" style="max-width: 18rem;">
+        <div class="card-body text-danger">
+          <p class="card-text"><h4> <b> {{ post.blood_type }} | {{ post.liters_required }} L</b> </h4>
+            <h6> <b> Litros donados: <b style="color:red;">{{post.liters_donated}} </b></b> </h6>
+            <br>
+            <h5> <b> {{ post.title|upper }} </b> </h5>
+            <h6> {{ post.body|truncatechars:20 }} </h6>
+            <br>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
+            </svg>
+            <b> {{ post.location }}</b>
+            <br>
+            <br>
+            <h6>Creada: {{ post.created_date|date:"d/m/Y" }}</h6>
+            <h6>Finaliza: {{post.expiration_date|date:"d/m/Y"}}</h6>
+            <br>
+            <a href="{% url 'update_progress' pk=post.pk %}" class="btn btn-outline-danger btn-sm" button style="margin: 10px">Actualizar donación</a>
+          </p>
+        </div>
+        <div class="card-footer bg-transparent border-danger">    <a href="{% url 'delete_post' pk=post.pk %}" class="btn btn-danger btn-sm" button style="margin: 10px">Eliminar</a>
+          <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-dark btn-sm" button style="margin: 10px">Ver detalle</a>
+        </div>
+    </div>
 </div>
-{% endfor %}
+{% endfor %}    
 
 {% endblock %}
+
+
+
